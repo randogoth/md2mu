@@ -17,14 +17,12 @@ UNDERLINED_END_RE = {
 }
 
 def parse_underlined(inline, m, state):
-    print(inline, m, state)
     text = m.group(2)
     print('rrr')
     state.append_token({'type': 'underlined', 'raw': text})
     return m.end()
 
 def parse_underlined(self, m, state) -> int:
-        print(state)
         pos = m.end()
         marker = m.group(0)
         mlen = len(marker)
@@ -142,6 +140,13 @@ class Markdown2Micron(MarkdownRenderer):
     def list(self, token: Dict[str, Any], state: BlockState) -> str:
         return render_list(self, token, state)
 
+def m2μ():
+    m2μr = Markdown2Micron()
+    m2μ = Markdown(renderer=m2μr)
+    m2μ.inline.register('underlined', UNDERLINED, parse_underlined, before='emphasis')
+    m2μ.renderer.register('underlined', render_underlined)
+    return m2μ
+
 def main():
 
     parser = argparse.ArgumentParser(description="Converts a Markdown file to Micron format")
@@ -152,13 +157,10 @@ def main():
 
     with open(args.md_file, 'r') as mdf:
         md_str = mdf.read()
-    m2μr = Markdown2Micron()
-    m2μ = Markdown(renderer=m2μr)
-    m2μ.inline.register('underlined', UNDERLINED, parse_underlined, before='emphasis')
-    m2μ.renderer.register('underlined', render_underlined)
+    md2mu = m2μ()
 
     with open(args.mu_file, 'w') as muf:
-        md_str = muf.write(m2μ(md_str))
+        md_str = muf.write(md2mu(md_str))
 
 if __name__ == "__main__":
 	main()
