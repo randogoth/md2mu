@@ -1,3 +1,6 @@
+> [!NOTE] 
+> This package is not maintained anymore. To convert markdown to micron is recommended to use the much more versatile follow-up CLI [md2txt](https://github.com/randogoth/md2txt/) with the `micron` renderer.
+
 # md2mu
 
 Simple CLI tool to convert existing Markdown files into Micron format to use in [Nomad Network](https://github.com/markqvist/NomadNet) nodes
